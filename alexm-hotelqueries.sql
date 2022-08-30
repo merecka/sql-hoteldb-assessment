@@ -4,8 +4,8 @@ USE alexmhoteldb;
 /* Write a query that returns a list of reservations that end in July 2023, including the name of the guest, 
 the room number(s), and the reservation dates. */
 SELECT FirstName, LastName, RoomNumber, StartDate, EndDate from reservation 
-JOIN roomreservation ON reservation.ReservationId = roomreservation.ReservationId
-JOIN guest ON reservation.GuestId = guest.GuestId
+INNER JOIN roomreservation ON reservation.ReservationId = roomreservation.ReservationId
+INNER JOIN guest ON reservation.GuestId = guest.GuestId
 WHERE EndDate >= '2023-07-01' AND EndDate <= '2023-07-31';
 /* Alex	Merecka	205	2023-06-28	2023-07-02
 Walter	Holaway	204	2023-07-13	2023-07-14
@@ -15,11 +15,11 @@ Bettyann	Seery	303	2023-07-28	2023-07-29 */
 /* Write a query that returns a list of all reservations for rooms with a jacuzzi, displaying the guest's name, 
 the room number, and the dates of the reservation. */
 SELECT FirstName, LastName, RoomReservation.RoomNumber, StartDate, EndDate, amenities.AmenityName FROM reservation 
-JOIN roomreservation ON reservation.ReservationId = roomreservation.ReservationId
-JOIN guest ON reservation.GuestId = guest.GuestId
-JOIN room ON roomreservation.RoomNumber = room.RoomNumber
-JOIN roomamenities ON room.RoomNumber = roomamenities.RoomNumber
-JOIN amenities ON amenities.AmenityName = roomamenities.AmenityName
+INNER JOIN roomreservation ON reservation.ReservationId = roomreservation.ReservationId
+INNER JOIN guest ON reservation.GuestId = guest.GuestId
+INNER JOIN room ON roomreservation.RoomNumber = room.RoomNumber
+INNER JOIN roomamenities ON room.RoomNumber = roomamenities.RoomNumber
+INNER JOIN amenities ON amenities.AmenityName = roomamenities.AmenityName
 WHERE amenities.AmenityName = 'Jacuzzi';
 /* Karie	Yang	201	2023-03-06	2023-03-07	Jacuzzi
 Bettyann	Seery	203	2023-02-05	2023-02-10	Jacuzzi
@@ -37,9 +37,9 @@ Alex	Merecka	307	2023-03-17	2023-03-20	Jacuzzi */
 the room(s) reserved, the starting date of the reservation, and how many people were included in the reservation.
  (Choose a guest's name from the existing data.) */
 SELECT FirstName, LastName, RoomReservation.RoomNumber, StartDate, Adults, Children FROM reservation
-JOIN roomreservation ON reservation.ReservationId = roomreservation.ReservationId
-JOIN guest ON reservation.GuestId = guest.GuestId
-JOIN room ON roomreservation.RoomNumber = room.RoomNumber
+INNER JOIN roomreservation ON reservation.ReservationId = roomreservation.ReservationId
+INNER JOIN guest ON reservation.GuestId = guest.GuestId
+INNER JOIN room ON roomreservation.RoomNumber = room.RoomNumber
 WHERE FirstName = "Joleen";
 /* Joleen	Tison	206	2023-06-10	2	0
 Joleen	Tison	208	2023-06-10	1	0 */
@@ -47,7 +47,7 @@ Joleen	Tison	208	2023-06-10	1	0 */
 /* Write a query that returns a list of rooms, reservation ID, and per-room cost for each reservation. 
 The results should include all rooms, whether or not there is a reservation associated with the room. */
 SELECT Room.RoomNumber, Reservation.ReservationId, TotalRoomCost FROM reservation
-JOIN roomreservation ON reservation.ReservationId = roomreservation.ReservationId
+INNER JOIN roomreservation ON reservation.ReservationId = roomreservation.ReservationId
 RIGHT JOIN room on roomreservation.RoomNumber = room.RoomNumber;
 /* 201	4	199.99
 202	7	349.98
@@ -79,16 +79,16 @@ RIGHT JOIN room on roomreservation.RoomNumber = room.RoomNumber;
 /* Write a query that returns all rooms with a capacity of three or more and that are reserved on any date in 
 April 2023. */
 SELECT Room.RoomNumber, MaximumOccupancy, StartDate FROM reservation
-JOIN roomreservation ON reservation.ReservationId = roomreservation.ReservationId
-JOIN room on roomreservation.RoomNumber = room.RoomNumber
+INNER JOIN roomreservation ON reservation.ReservationId = roomreservation.ReservationId
+INNER JOIN room on roomreservation.RoomNumber = room.RoomNumber
 WHERE MaximumOccupancy > 3 AND StartDate >= '2023-04-01' AND EndDate <= '2023-04-30';
 /* 301	4	2023-04-09 */
 
 /* Write a query that returns a list of all guest names and the number of reservations per guest, sorted starting 
 with the guest with the most reservations and then by the guest's last name. */
 SELECT FirstName, LastName, COUNT(*) TotalReservations FROM reservation
-JOIN roomreservation ON reservation.ReservationId = roomreservation.ReservationId
-JOIN guest ON guest.GuestId = reservation.GuestId
+INNER JOIN roomreservation ON reservation.ReservationId = roomreservation.ReservationId
+INNER JOIN guest ON guest.GuestId = reservation.GuestId
 GROUP BY guest.GuestId
 ORDER BY COUNT(*) DESC, LastName ASC;
 /* Mack	Simmer	4
