@@ -81,7 +81,7 @@ April 2023. */
 SELECT Room.RoomNumber, MaximumOccupancy, StartDate FROM reservation
 INNER JOIN roomreservation ON reservation.ReservationId = roomreservation.ReservationId
 INNER JOIN room on roomreservation.RoomNumber = room.RoomNumber
-WHERE MaximumOccupancy > 3 AND StartDate >= '2023-04-01' AND StartDate <= '2023-04-30';
+WHERE MaximumOccupancy >= 3 AND StartDate >= '2023-04-01' AND StartDate <= '2023-04-30';
 /* 301	4	2023-04-09 */
 
 /* Write a query that returns a list of all guest names and the number of reservations per guest, sorted starting 
